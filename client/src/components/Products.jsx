@@ -24,11 +24,13 @@ const Products = ({ cat, search, filters, sort }) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
+  const BASE_URL = 'http://localhost:5000/api/';
+
   useEffect(() => {
     const getProducts = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/products${cat ? '?category=' + cat : ''}`
+          `${BASE_URL}products${cat ? '?category=' + cat : ''}`
         );
         setProducts(res.data);
         setFilteredProducts(res.data);
@@ -40,7 +42,7 @@ const Products = ({ cat, search, filters, sort }) => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/products`);
+        const res = await axios.get(`${BASE_URL}products`);
         setProducts(
           [...res.data].filter((p) => p.title.toLowerCase().includes(search))
         );

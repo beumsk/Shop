@@ -299,6 +299,7 @@ const Product = () => {
             Add to cart
           </Button>
         </InfoContainer>
+        {/* TODO: add random products */}
       </Wrapper>
       <Newsletter />
       <Footer />

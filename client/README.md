@@ -5,8 +5,11 @@ Full stack MERN React shop built with Node, React, Redux, Axios, MongoDB, Stripe
 based off these videos:
 
 - UI (styled-components): https://www.youtube.com/watch?v=c1xTDSIXit8
+- https://github.com/safak/youtube/tree/react-shop-ui
 - Backend (Node, Mongodb, Stripe, JWT): https://www.youtube.com/watch?v=rMiRZ1iRC0A
-- Frontend (React, Redux, Axios): https://www.youtube.com/watch?v=y66RgYMAgSo
+- https://github.com/safak/youtube/tree/node-shop-api
+- Frontend (React, Redux, Axios): https://www.youtube.com/watch?v=y66RgYMAgSo&t=6068s
+- https://github.com/safak/youtube/tree/mern-ecommerce-app/
 
 ## Instructions
 
@@ -17,10 +20,10 @@ yarn start
 
 - add back office section
 
-- wishlist feature
+- random products below product page
 - Create more products
-- add great image all over the site
 
 - separate style from front
+- reuse styled components
 
 - switch to more recent stripe than stripe checkout

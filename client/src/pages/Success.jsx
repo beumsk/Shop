@@ -133,42 +133,46 @@ const Success = () => {
             ? 'Congratulations!'
             : 'Your order faced an error, you will be redirected.'}
         </Title>
-        <Subtitle>
-          {orderId
-            ? `Your order has been created successfully. Your order number is: ${orderId}`
-            : 'Your order is being prepared...'}
-        </Subtitle>
-        {orderId && (
-          <TableWrapper>
-            <Table>
-              <Thead>
-                <Tr>
-                  <Th>Title</Th>
-                  <Th>Size</Th>
-                  <Th>Color</Th>
-                  <Th>Qtt</Th>
-                  <Th>Price</Th>
-                  <Th>Subtotal</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {cart.products.map((p) => (
-                  <Tr key={p._id}>
-                    <Td>
-                      <ItemLink to={'/product/' + p._id}>{p.title}</ItemLink>
-                    </Td>
-                    <Td>{p.size}</Td>
-                    <Td>{p.color}</Td>
-                    <Td>{p.quantity}</Td>
-                    <Td>{p.price}€</Td>
-                    <Td>{p.price * p.quantity}€</Td>
-                  </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </TableWrapper>
+        {data && (
+          <Subtitle>
+            {orderId
+              ? `Your order has been created successfully. Your order number is: ${orderId}`
+              : 'Your order is being prepared...'}
+          </Subtitle>
         )}
-        <Total>TOTAL: {cart?.total}€</Total>
+        {orderId && (
+          <>
+            <TableWrapper>
+              <Table>
+                <Thead>
+                  <Tr>
+                    <Th>Title</Th>
+                    <Th>Size</Th>
+                    <Th>Color</Th>
+                    <Th>Qtt</Th>
+                    <Th>Price</Th>
+                    <Th>Subtotal</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {cart.products.map((p) => (
+                    <Tr key={p._id}>
+                      <Td>
+                        <ItemLink to={'/product/' + p._id}>{p.title}</ItemLink>
+                      </Td>
+                      <Td>{p.size}</Td>
+                      <Td>{p.color}</Td>
+                      <Td>{p.quantity}</Td>
+                      <Td>{p.price}€</Td>
+                      <Td>{p.price * p.quantity}€</Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </TableWrapper>
+            <Total>TOTAL: {cart?.total}€</Total>
+          </>
+        )}
         <Linkk to="/">Go back home</Linkk>
       </Wrapper>
       <Newsletter />

@@ -143,9 +143,11 @@ const Profile = () => {
         </>
 
         <div>
-          <ShowButton onClick={() => setShowOrders(!showOrders)}>
-            {showOrders ? 'Hide' : 'Show'} orders
-          </ShowButton>
+          {orders && (
+            <ShowButton onClick={() => setShowOrders(!showOrders)}>
+              {showOrders ? 'Hide' : 'Show'} orders
+            </ShowButton>
+          )}
           {showOrders &&
             orders &&
             orders

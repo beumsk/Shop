@@ -24,7 +24,6 @@ const Left = styled.div`
 
 const Language = styled.span`
   font-size: 14px;
-  cursor: pointer;
   display: none;
   ${mq({ display: 'unset' }, 600)}
 `;
@@ -99,6 +98,10 @@ const Logout = styled.span`
   font-size: 12px;
   margin-left: 8px;
   cursor: pointer;
+  transition: color 0.2s;
+  &:hover {
+    color: #666;
+  }
   ${mq({ fontSize: '14px', marginLeft: '16px' }, 600)}
 `;
 

@@ -134,9 +134,6 @@ const Cart = () => {
                         <ProductName>
                           <Link to={'/product/' + p._id}>{p.title}</Link>
                         </ProductName>
-                        {/* <ProductId>
-                          <b>ID:</b> {p._id}
-                        </ProductId> */}
                         <ProductColor color={p.color} title={p.color} />
                         <ProductSize>
                           <b>Size:</b> {p.size?.toUpperCase()}
