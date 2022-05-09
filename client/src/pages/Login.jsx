@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
@@ -37,9 +37,13 @@ const Form = styled.form`
   flex-direction: column;
 `;
 
+const Label = styled.label`
+  padding: 8px 0;
+`;
+
 const Input = styled.input`
   flex: 1;
-  margin: 8px 0;
+  margin-bottom: 8px;
   padding: 8px;
 `;
 
@@ -50,7 +54,7 @@ const Button = styled.button`
   background: #319795;
   color: #fff;
   cursor: pointer;
-  margin: 8px 0;
+  margin: 16px 0;
   text-transform: uppercase;
   ${mq({ width: '40%' }, 600)}
   &:disabled {
@@ -63,7 +67,6 @@ const Error = styled.p`
 `;
 
 const Linkk = styled(Link)`
-  margin: 4px 0;
   font-size: 12px;
   text-decoration: underline;
   cursor: pointer;
@@ -73,8 +76,10 @@ const Linkk = styled(Link)`
 `;
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const location = useLocation();
+  const registerData = location.state?.form;
+  const [username, setUsername] = useState(registerData?.username || '');
+  const [password, setPassword] = useState(registerData?.password || '');
   const dispatch = useDispatch();
   const { isFetching, error } = useSelector((state) => state.user);
 
@@ -89,21 +94,27 @@ const Login = () => {
       <Container>
         <Wrapper>
           <Title>Sign in</Title>
-          <Form>
+          <Form onSubmit={handleLogin}>
+            <Label htmlFor="username">Username</Label>
             <Input
-              placeholder="username"
+              name="username"
+              id="username"
+              placeholder="Username"
+              value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
+            <Label htmlFor="password">Password</Label>
             <Input
               type="password"
-              placeholder="password"
+              id="password"
+              name="password"
+              placeholder="Password"
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Button onClick={handleLogin} disabled={isFetching}>
-              Login
-            </Button>
+            <Button disabled={isFetching}>Login</Button>
             {error && <Error>Something went wrong...</Error>}
-            <Linkk to="/">Forgot password</Linkk>
+            {/* <Linkk to="/">Forgot password</Linkk> */}
             <Linkk to="/register">Create new account</Linkk>
           </Form>
         </Wrapper>

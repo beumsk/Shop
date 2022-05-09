@@ -11,7 +11,7 @@ const Container = styled.div`
 `;
 
 const Announcement = () => {
-  return <Container>Super deal</Container>;
+  return <Container>Currently the shipping is FREE</Container>;
 };
 
 export default Announcement;

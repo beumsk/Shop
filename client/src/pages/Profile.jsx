@@ -109,7 +109,9 @@ const Profile = () => {
       try {
         const res = await userRequest.get(`/orders`);
         setOrders(res.data);
-      } catch (err) {}
+      } catch (err) {
+        console.error(err);
+      }
     };
     getOrders();
   }, []);

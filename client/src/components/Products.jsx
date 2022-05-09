@@ -34,7 +34,9 @@ const Products = ({ cat, search, filters, sort }) => {
         );
         setProducts(res.data);
         setFilteredProducts(res.data);
-      } catch (err) {}
+      } catch (err) {
+        console.error(err);
+      }
     };
     getProducts();
   }, [cat]);
@@ -49,7 +51,9 @@ const Products = ({ cat, search, filters, sort }) => {
         setFilteredProducts(
           [...res.data].filter((p) => p.title.toLowerCase().includes(search))
         );
-      } catch (err) {}
+      } catch (err) {
+        console.error(err);
+      }
     };
     if (search) {
       getProducts();
