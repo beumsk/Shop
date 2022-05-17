@@ -39,14 +39,13 @@ const userSlice = createSlice({
       }
       const syncWishlist = async () => {
         try {
-          const res = await userRequest.put('/users/' + state.currentUser._id, {
+          await userRequest.put('/users/' + state.currentUser._id, {
             wishlist: state.currentUser.wishlist,
           });
         } catch (err) {
           console.error(err);
         }
       };
-      // add the wishlist update to the server
       syncWishlist();
     },
   },

@@ -115,7 +115,7 @@ const Register = () => {
     setErrorServer('');
     const registerUser = async () => {
       try {
-        const res = await publicRequest.post('/auth/register', {
+        await publicRequest.post('/auth/register', {
           username: form.username,
           email: form.email,
           password: form.password,

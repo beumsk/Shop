@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
@@ -77,6 +77,7 @@ const Linkk = styled(Link)`
 
 const Login = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const registerData = location.state?.form;
   const [username, setUsername] = useState(registerData?.username || '');
   const [password, setPassword] = useState(registerData?.password || '');
@@ -86,6 +87,7 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     login(dispatch, { username, password });
+    navigate(-1);
   };
 
   return (
