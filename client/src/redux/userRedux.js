@@ -39,6 +39,7 @@ const userSlice = createSlice({
       }
       const syncWishlist = async () => {
         try {
+          // unused const ?
           const res = await userRequest.put('/users/' + state.currentUser._id, {
             wishlist: state.currentUser.wishlist,
           });

@@ -10,6 +10,7 @@ const CartSchema = new mongoose.Schema(
       },
     ],
   },
+  // camelCase ?
   { timestamps: true }
 );
 

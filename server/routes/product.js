@@ -1,4 +1,5 @@
 const Product = require('../models/Product');
+// verifyTokenAndAuthorization is unused ?
 const {
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin,

@@ -17,6 +17,7 @@ const OrderSchema = new mongoose.Schema(
     address: { type: Object, required: true },
     status: { type: String, default: 'pending' },
   },
+  // camelCase is needed
   { timestamps: true }
 );
 
