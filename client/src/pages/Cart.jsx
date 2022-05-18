@@ -200,23 +200,25 @@ const Cart = () => {
                   <SummaryItemText>Total</SummaryItemText>
                   <SummaryItemPrice>{cart.total} €</SummaryItemPrice>
                 </SummaryItem>
-                {/* {stripeToken ? (
-                <span>Processing...</span>
-              ) : ( */}
-                <StripeCheckout
-                  name="React shop"
-                  // image=""
-                  billingAddress
-                  shippingAddress
-                  description={`Your total is ${cart.total} €`}
-                  amount={cart.total * 100}
-                  currency="EUR"
-                  token={onToken}
-                  disabled={cart.total === 0}
-                  stripeKey={KEY}>
-                  <Button>CHECKOUT NOW</Button>
-                </StripeCheckout>
-                {/* )} */}
+                {!!user ? (
+                  <StripeCheckout
+                    name="React shop"
+                    // image=""
+                    billingAddress
+                    shippingAddress
+                    description={`Your total is ${cart.total} €`}
+                    amount={cart.total * 100}
+                    currency="EUR"
+                    token={onToken}
+                    disabled={cart.total === 0}
+                    stripeKey={KEY}>
+                    <Button>
+                      {stripeToken ? 'Processing...' : 'CHECKOUT NOW'}
+                    </Button>
+                  </StripeCheckout>
+                ) : (
+                  <Button onClick={() => navigate('/login')}>CHECKOUT</Button>
+                )}
               </Summary>
             </Bottom>
 

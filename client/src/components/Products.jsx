@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Product from './Product';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Subtitle } from '../pages/Cart.styled';
 
 const Container = styled.div`
   padding: 20px;
@@ -10,14 +10,6 @@ const Container = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 16px;
-`;
-
-const Button = styled.span`
-  margin: 20px auto;
-  padding: 8px;
-  cursor: pointer;
-  border: 2px solid;
-  background: transparent;
 `;
 
 const Products = ({ cat, search, filters, sort }) => {
@@ -46,10 +38,20 @@ const Products = ({ cat, search, filters, sort }) => {
       try {
         const res = await axios.get(`${BASE_URL}products`);
         setProducts(
-          [...res.data].filter((p) => p.title.toLowerCase().includes(search))
+          [...res.data].filter(
+            (p) =>
+              p.title.toLowerCase().includes(search) ||
+              p.desc.toLowerCase().includes(search) ||
+              p.categories.indexOf(search) !== -1
+          )
         );
         setFilteredProducts(
-          [...res.data].filter((p) => p.title.toLowerCase().includes(search))
+          [...res.data].filter(
+            (p) =>
+              p.title.toLowerCase().includes(search) ||
+              p.desc.toLowerCase().includes(search) ||
+              p.categories.indexOf(search) !== -1
+          )
         );
       } catch (err) {
         console.error(err);
@@ -63,9 +65,9 @@ const Products = ({ cat, search, filters, sort }) => {
   useEffect(() => {
     setFilteredProducts(
       products.filter((item) =>
-        Object.entries(filters).every(([key, value]) =>
-          item[key].includes(value)
-        )
+        Object.entries(filters).every(([key, value]) => {
+          return value !== '' ? item[key].includes(value) : item[key];
+        })
       )
     );
   }, [filters]);
@@ -94,9 +96,9 @@ const Products = ({ cat, search, filters, sort }) => {
             .slice(0, 8)
             .map((item) => <Product item={item} key={item._id} />)}
       {filteredProducts.length === 0 && (
-        <Button>
-          <Link to="/products">Take me to products</Link>
-        </Button>
+        <Subtitle style={{ flexBasis: '100%', marginBottom: '20px' }}>
+          There are no products matching your search and filters
+        </Subtitle>
       )}
     </Container>
   );

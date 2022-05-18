@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaHeart, FaMinus, FaPlus } from 'react-icons/fa';
 import styled from 'styled-components';
 import Announcement from '../components/Announcement';
@@ -74,6 +74,21 @@ const Title = styled.h1`
 
 const Desc = styled.p`
   margin-bottom: 16px;
+`;
+
+const Categories = styled.div`
+  margin-bottom: 16px;
+`;
+
+const Category = styled(Link)`
+  display: inline-block;
+  font-size: 12px;
+  border: solid 1px;
+  padding: 4px 8px;
+  margin-right: 8px;
+  &:hover {
+    color: #666;
+  }
 `;
 
 const Price = styled.p`
@@ -188,6 +203,7 @@ const Product = () => {
   const [size, setSize] = useState('');
   const [help, setHelp] = useState('');
   const [anim, setAnim] = useState(false);
+  const [CTA, setCTA] = useState(false);
   const user = useSelector((state) => state.user?.currentUser);
   const dispatch = useDispatch();
 
@@ -223,11 +239,12 @@ const Product = () => {
     }
   };
 
-  const handleClick = () => {
+  const handleCart = () => {
     if (color && size) {
       dispatch(addProduct({ ...product, quantity, color, size }));
       setHelp('');
       setAnim(true);
+      setCTA(true);
     } else {
       setHelp('Color and size must be selected');
     }
@@ -260,6 +277,13 @@ const Product = () => {
         <InfoContainer>
           <Title>{product.title}</Title>
           <Desc>{product.desc}</Desc>
+          <Categories>
+            {product?.categories?.map((c) => (
+              <Category key={c} to={'/products/' + c}>
+                {c}
+              </Category>
+            ))}
+          </Categories>
           <Price>{product.price} €</Price>
           <FilterContainer>
             <Filter>
@@ -295,11 +319,19 @@ const Product = () => {
           </AmountContainer>
           {help && <Help>{help}</Help>}
           <Button
-            onClick={handleClick}
+            onClick={handleCart}
             onAnimationEnd={() => setAnim(false)}
             className={anim ? 'animated' : ''}>
             Add to cart
           </Button>
+          {CTA && (
+            <>
+              <Button onClick={() => navigate('/products')}>
+                Find other products
+              </Button>
+              <Button onClick={() => navigate('/cart')}>Go to cart</Button>
+            </>
+          )}
         </InfoContainer>
         {/* TODO: add random products */}
       </Wrapper>

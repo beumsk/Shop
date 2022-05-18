@@ -27,3 +27,8 @@ yarn start
 - reuse styled components
 
 - switch to more recent stripe than stripe checkout
+
+- homepage: products x-scroll
+- check order creation after payment (in dev)
+
+- product cart add: create a pop up for validation (go to cart OR continue shopping)
