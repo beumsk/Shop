@@ -1,67 +1,50 @@
 import { FaHeart, FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { mq } from '../responsive';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateWishlist } from '../redux/userRedux';
 
-const Circle = styled.div`
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background: #fff;
-  position: absolute;
+const Container = styled.div`
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #ebf8ff;
+  position: relative;
+`;
+
+const LinkImage = styled(Link)`
+  width: 100%;
+  &:hover > img {
+    transform: scale(1.1);
+  }
+`;
+
+const LinkTitle = styled(Link)`
+  width: 100%;
+  &:hover + ${LinkImage} img {
+    transform: scale(1.1);
+  }
 `;
 
 const Image = styled.img`
   max-width: 220px;
   max-height: 220px;
-  z-index: 2;
-`;
-
-const Info = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.2);
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  transition: all 0.5s ease;
-  ${mq({ opacity: 0 }, 900)}
+  transition: transform 0.2s;
 `;
 
 const Title = styled.h2`
-  color: #fff;
   font-weight: 600;
+  padding: 20px 0;
   text-transform: capitalize;
-  transition: color 0.4s ease;
-  &:hover {
-    color: #57cccc;
-  }
-`;
-
-const Container = styled.div`
-  flex: 1;
-  min-width: 280px;
-  height: 350px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #ebf8ff;
-  position: relative;
-  &:hover ${Info} {
-    opacity: 1;
-  }
 `;
 
 const Icons = styled.div`
   display: flex;
   gap: 10px;
+  padding: 20px 0;
 `;
 
 const Icon = styled.div`
@@ -88,31 +71,32 @@ const Product = ({ item }) => {
 
   return (
     <Container>
-      <Circle />
-      <Image src={item.img} alt={item.title} />
-      <Info>
+      <LinkTitle to={'/product/' + item._id}>
+        <Title>{item.title}</Title>
+      </LinkTitle>
+
+      <LinkImage to={'/product/' + item._id}>
+        <Image src={item.img} alt={item.title} />
+      </LinkImage>
+
+      <Icons>
         <Link to={'/product/' + item._id}>
-          <Title>{item.title}</Title>
+          <Icon>
+            <FaSearch />
+          </Icon>
         </Link>
-        <Icons>
-          <Link to={'/product/' + item._id}>
-            <Icon>
-              <FaSearch />
-            </Icon>
-          </Link>
-          {user && (
-            <Icon onClick={() => handleHeart(item)}>
-              <FaHeart
-                style={{
-                  color: user?.wishlist.some((w) => w._id === item._id)
-                    ? 'red'
-                    : null,
-                }}
-              />
-            </Icon>
-          )}
-        </Icons>
-      </Info>
+        {user && (
+          <Icon onClick={() => handleHeart(item)}>
+            <FaHeart
+              style={{
+                color: user?.wishlist.some((w) => w._id === item._id)
+                  ? 'red'
+                  : null,
+              }}
+            />
+          </Icon>
+        )}
+      </Icons>
     </Container>
   );
 };

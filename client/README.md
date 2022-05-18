@@ -20,15 +20,12 @@ yarn start
 
 - add back office section
 
-- random products below product page
 - Create more products
-
 - separate style from front
 - reuse styled components
 
 - switch to more recent stripe than stripe checkout
 
-- homepage: products x-scroll
 - check order creation after payment (in dev)
-
-- product cart add: create a pop up for validation (go to cart OR continue shopping)
+- search does not always filter on first render
+- check for wasted renders

@@ -11,7 +11,7 @@ import Success from './pages/Success';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Product from './pages/Product';
-import ProductList from './pages/ProductList';
+import Products from './pages/Products';
 import Search from './pages/Search';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
@@ -36,8 +36,8 @@ const App = () => {
       <Routes>
         <Route path="/">
           <Route index element={<Home />} />
-          <Route path="products" element={<ProductList />}>
-            <Route path=":cat" element={<ProductList />} />
+          <Route path="products" element={<Products />}>
+            <Route path=":cat" element={<Products />} />
           </Route>
           <Route path="search" element={<Search />}>
             <Route path=":cat" element={<Search />} />

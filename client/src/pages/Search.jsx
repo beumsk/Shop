@@ -5,7 +5,7 @@ import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Newsletter from '../components/Newsletter';
-import Products from '../components/Products';
+import ProductList from '../components/ProductList';
 import { mq } from '../responsive';
 
 const Container = styled.div``;
@@ -123,7 +123,7 @@ const Search = () => {
         <Reset onClick={handleReset}>Reset</Reset>
       </FilterContainer>
 
-      <Products search={search} filters={filters} sort={sort} />
+      <ProductList search={search} filters={filters} sort={sort} count={10} />
       <Newsletter />
       <Footer />
     </Container>

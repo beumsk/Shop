@@ -27,6 +27,7 @@ const ProductContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  text-align: center;
   gap: 16px;
 `;
 

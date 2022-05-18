@@ -5,7 +5,7 @@ import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Newsletter from '../components/Newsletter';
-import Products from '../components/Products';
+import ProductList from '../components/ProductList';
 import { mq } from '../responsive';
 
 const Container = styled.div``;
@@ -57,7 +57,7 @@ const Reset = styled.button`
   }
 `;
 
-const ProductList = () => {
+const Products = () => {
   const location = useLocation();
   const cat = location.pathname.split('/')[2];
   const [filters, setFilters] = useState({ color: '', size: '' });
@@ -123,11 +123,11 @@ const ProductList = () => {
         <Reset onClick={handleReset}>Reset</Reset>
       </FilterContainer>
 
-      <Products cat={cat} filters={filters} sort={sort} />
+      <ProductList cat={cat} filters={filters} sort={sort} />
       <Newsletter />
       <Footer />
     </Container>
   );
 };
 
-export default ProductList;
+export default Products;

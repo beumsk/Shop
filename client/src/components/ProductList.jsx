@@ -3,16 +3,31 @@ import styled from 'styled-components';
 import Product from './Product';
 import axios from 'axios';
 import { Subtitle } from '../pages/Cart.styled';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   padding: 20px;
+  text-align: center;
+`;
+
+const ProductContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 16px;
 `;
 
-const Products = ({ cat, search, filters, sort }) => {
+const ButtonLink = styled(Link)`
+  margin: 20px auto;
+  display: inline-block;
+  border: solid 1px;
+  padding: 8px;
+  &:hover {
+    color: #666;
+  }
+`;
+
+const ProductList = ({ cat, search, filters, sort, except, count }) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
@@ -64,8 +79,8 @@ const Products = ({ cat, search, filters, sort }) => {
 
   useEffect(() => {
     setFilteredProducts(
-      products.filter((item) =>
-        Object.entries(filters).every(([key, value]) => {
+      products?.filter((item) =>
+        Object.entries(filters)?.every(([key, value]) => {
           return value !== '' ? item[key].includes(value) : item[key];
         })
       )
@@ -90,18 +105,23 @@ const Products = ({ cat, search, filters, sort }) => {
 
   return (
     <Container>
-      {cat || search
-        ? filteredProducts.map((item) => <Product item={item} key={item._id} />)
-        : [...filteredProducts]
-            .slice(0, 8)
-            .map((item) => <Product item={item} key={item._id} />)}
-      {filteredProducts.length === 0 && (
-        <Subtitle style={{ flexBasis: '100%', marginBottom: '20px' }}>
-          There are no products matching your search and filters
-        </Subtitle>
-      )}
+      <ProductContainer>
+        {[...filteredProducts]
+          .filter((i) => i._id !== except)
+          .slice(0, count || 1000)
+          .map((item) => (
+            <Product item={item} key={item._id} />
+          ))}
+
+        {filteredProducts.length === 0 && (
+          <Subtitle style={{ flexBasis: '100%', marginBottom: '20px' }}>
+            There are no products matching your search and filters
+          </Subtitle>
+        )}
+      </ProductContainer>
+      {count && <ButtonLink to="/products">Check out all products</ButtonLink>}
     </Container>
   );
 };
 
-export default Products;
+export default ProductList;

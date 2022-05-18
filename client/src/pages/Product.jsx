@@ -6,6 +6,7 @@ import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Newsletter from '../components/Newsletter';
+import ProductList from '../components/ProductList';
 import { mq } from '../responsive';
 import { publicRequest } from '../requestMethods';
 import { addProduct } from '../redux/cartRedux';
@@ -17,7 +18,7 @@ const Container = styled.div``;
 const Wrapper = styled.div`
   padding: 20px;
   position: relative;
-  ${mq({ display: 'flex', padding: '50px' }, 600)}
+  ${mq({ display: 'flex', padding: '50px 20px' }, 600)}
 `;
 
 const Previous = styled.p`
@@ -62,7 +63,7 @@ const HeartContainer = styled.div`
 
 const InfoContainer = styled.div`
   flex: 1;
-  ${mq({ padding: '0 40px' }, 600)}
+  ${mq({ padding: '0 0 0 40px' }, 600)}
 `;
 
 const Title = styled.h1`
@@ -191,6 +192,11 @@ const Button = styled.button`
       color: whitesmoke;
     }
   }
+`;
+
+const Title2 = styled.p`
+  font-size: 20px;
+  padding: 0 20px;
 `;
 
 const Product = () => {
@@ -335,6 +341,8 @@ const Product = () => {
         </InfoContainer>
         {/* TODO: add random products */}
       </Wrapper>
+      <Title2>Suggested products</Title2>
+      <ProductList except={id} count={3} />
       <Newsletter />
       <Footer />
     </Container>
