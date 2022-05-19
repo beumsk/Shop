@@ -19,6 +19,7 @@ yarn start
 ## TODO
 
 - add back office section
+- add categories page?
 
 - Create more products
 - separate style from front
@@ -27,5 +28,4 @@ yarn start
 - switch to more recent stripe than stripe checkout
 
 - check order creation after payment (in dev)
-- search does not always filter on first render
 - check for wasted renders

@@ -39,43 +39,25 @@ const ProductList = ({ cat, search, filters, sort, except, count }) => {
         const res = await axios.get(
           `${BASE_URL}products${cat ? '?category=' + cat : ''}`
         );
-        setProducts(res.data);
-        setFilteredProducts(res.data);
+        if (!!search) {
+          const filteredData = [...res.data].filter(
+            (p) =>
+              p.title.toLowerCase().includes(search) ||
+              p.desc.toLowerCase().includes(search) ||
+              p.categories.indexOf(search) !== -1
+          );
+          setProducts(filteredData);
+          setFilteredProducts(filteredData);
+        } else {
+          setProducts(res.data);
+          setFilteredProducts(res.data);
+        }
       } catch (err) {
         console.error(err);
       }
     };
     getProducts();
-  }, [cat]);
-
-  useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const res = await axios.get(`${BASE_URL}products`);
-        setProducts(
-          [...res.data].filter(
-            (p) =>
-              p.title.toLowerCase().includes(search) ||
-              p.desc.toLowerCase().includes(search) ||
-              p.categories.indexOf(search) !== -1
-          )
-        );
-        setFilteredProducts(
-          [...res.data].filter(
-            (p) =>
-              p.title.toLowerCase().includes(search) ||
-              p.desc.toLowerCase().includes(search) ||
-              p.categories.indexOf(search) !== -1
-          )
-        );
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    if (search) {
-      getProducts();
-    }
-  }, [search]);
+  }, [cat, search]);
 
   useEffect(() => {
     setFilteredProducts(
