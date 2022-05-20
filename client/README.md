@@ -29,3 +29,5 @@ yarn start
 
 - check order creation after payment (in dev)
 - check for wasted renders
+
+- add testing

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import { mq } from '../responsive';
 
@@ -41,7 +42,27 @@ const Reset = styled.button`
   }
 `;
 
-const Filters = ({ handleFilters, filters, handleSort, sort, handleReset }) => {
+const Filters = ({ setFilters, filters, setSort, sort, cat, search }) => {
+  useEffect(() => {
+    handleReset();
+  }, [cat, search]);
+
+  const handleFilters = (e) => {
+    setFilters({
+      ...filters,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSort = (e) => {
+    setSort(e.target.value);
+  };
+
+  const handleReset = () => {
+    setFilters({ color: '', size: '' });
+    setSort('newest');
+  };
+
   return (
     <FilterContainer>
       <Filter>

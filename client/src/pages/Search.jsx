@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Announcement from '../components/Announcement';
@@ -23,27 +23,7 @@ const Search = () => {
   const [filters, setFilters] = useState({ color: '', size: '' });
   const [sort, setSort] = useState('newest');
 
-  useEffect(() => {
-    handleReset();
-  }, [search]);
-
-  const handleFilters = (e) => {
-    setFilters({
-      ...filters,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSort = (e) => {
-    setSort(e.target.value);
-  };
-
-  const handleReset = () => {
-    setFilters({ color: '', size: '' });
-    setSort('newest');
-  };
-
-  const filterProps = { handleFilters, filters, handleSort, sort, handleReset };
+  const filterProps = { setFilters, filters, setSort, sort, search };
 
   return (
     <Container>
