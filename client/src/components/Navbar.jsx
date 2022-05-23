@@ -6,7 +6,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/apiCalls';
 
-const Container = styled.div``;
+const Container = styled.div`
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: white;
+  box-shadow: 0 0 4px #ddd;
+`;
 
 const Wrapper = styled.div`
   padding: 8px;

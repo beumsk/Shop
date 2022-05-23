@@ -267,12 +267,12 @@ const Product = () => {
       <Wrapper>
         <Previous onClick={() => navigate(-1)}>‹ Go back</Previous>
         <ImageContainer>
-          <Image src={product.img} alt={product.title} />
+          <Image src={product?.img} alt={product?.title} />
           {user && (
             <HeartContainer onClick={() => handleHeart(product)}>
               <FaHeart
                 style={{
-                  color: user?.wishlist.some((w) => w._id === product._id)
+                  color: user?.wishlist.some((w) => w._id === product?._id)
                     ? 'red'
                     : null,
                 }}
@@ -281,8 +281,8 @@ const Product = () => {
           )}
         </ImageContainer>
         <InfoContainer>
-          <Title>{product.title}</Title>
-          <Desc>{product.desc}</Desc>
+          <Title>{product?.title}</Title>
+          <Desc>{product?.desc}</Desc>
           <Categories>
             {product?.categories?.map((c) => (
               <Category key={c} to={'/products/' + c}>
@@ -290,11 +290,11 @@ const Product = () => {
               </Category>
             ))}
           </Categories>
-          <Price>{product.price} €</Price>
+          <Price>{product?.price} €</Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
-              {product.color?.map((c) => (
+              {product?.color?.map((c) => (
                 <FilterColor
                   key={c}
                   title={c}
@@ -308,7 +308,7 @@ const Product = () => {
               <FilterTitle>Size</FilterTitle>
               <FilterSize onChange={handleSize} value={size}>
                 <FilterSizeOption value="">Select a size</FilterSizeOption>
-                {product.size?.map((s) => (
+                {product?.size?.map((s) => (
                   <FilterSizeOption key={s} value={s}>
                     {s.toUpperCase()}
                   </FilterSizeOption>

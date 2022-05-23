@@ -19,7 +19,7 @@ yarn start
 ## TODO
 
 - add back office section
-- add categories page?
+- real top nav?
 
 - Create more products
 - separate style from front

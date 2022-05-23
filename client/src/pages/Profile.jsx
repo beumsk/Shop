@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -155,7 +155,7 @@ const Profile = () => {
             orders
               .filter((o) => o.userId === user._id)
               .map((o, index) => (
-                <>
+                <Fragment key={o._id}>
                   <OrderTitle>
                     Order #{index + 1} - {formatDate(o.createdAt)}
                   </OrderTitle>
@@ -176,7 +176,7 @@ const Profile = () => {
                         {o.products.map((p) => (
                           <Tr key={p._id}>
                             <Td>
-                              <ItemLink to={'/product/' + p._id}>
+                              <ItemLink to={'/product/' + p.productId}>
                                 {p.title}
                               </ItemLink>
                             </Td>
@@ -196,7 +196,7 @@ const Profile = () => {
                       </Tfoot>
                     </Table>
                   </TableWrapper>
-                </>
+                </Fragment>
               ))}
         </div>
         <Logout onClick={onLogout}>Logout</Logout>
