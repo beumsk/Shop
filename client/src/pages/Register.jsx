@@ -136,7 +136,7 @@ const Register = () => {
       <Navbar />
       <Container>
         <Wrapper>
-          <Title>Create an account</Title>
+          <Title>Register</Title>
           {/* TODO: add registration to server!! api/auth/register */}
           <Form onSubmit={handleRegister}>
             <InputContainer>
@@ -245,8 +245,7 @@ const Register = () => {
                   ? false
                   : true
               }>
-              {' '}
-              Create
+              Register
             </Button>
 
             {errorServer !== '' && <ErrorText>{errorServer}</ErrorText>}

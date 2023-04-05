@@ -95,7 +95,7 @@ const Login = () => {
       <Navbar />
       <Container>
         <Wrapper>
-          <Title>Sign in</Title>
+          <Title>Login</Title>
           <Form onSubmit={handleLogin}>
             <Label htmlFor="username">Username</Label>
             <Input

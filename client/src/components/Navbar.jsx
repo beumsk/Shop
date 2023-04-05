@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { FaSearch, FaShoppingCart, FaHeart } from 'react-icons/fa';
+import { FaSearch, FaShoppingCart, FaHeart, FaTshirt } from 'react-icons/fa';
 import { mq } from '../responsive';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -100,6 +100,22 @@ const MenuItem = styled(Link)`
   ${mq({ fontSize: '14px', marginLeft: '16px' }, 600)}
 `;
 
+const MenuItemProduct = styled(MenuItem)`
+  color: #319795;
+  @keyframes roll {
+    90% {
+      transform: scale(1);
+    }
+    95% {
+      transform: scale(1.4);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  animation: roll 10s infinite;
+`;
+
 const Logout = styled.span`
   font-size: 12px;
   margin-left: 8px;
@@ -132,6 +148,18 @@ const Count = styled.div`
       transform: scale(1.5);
     }
   }
+`;
+
+const NoSR = styled.span`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 `;
 
 const Navbar = () => {
@@ -201,8 +229,13 @@ const Navbar = () => {
               <MenuItem to="/login">Login</MenuItem>
             </>
           )}
+          <MenuItemProduct to="/products">
+            <NoSR>Products</NoSR>
+            <FaTshirt title="Products" style={{ verticalAlign: 'middle' }} />
+          </MenuItemProduct>
           <MenuItem to="/cart">
-            <FaShoppingCart style={{ verticalAlign: 'middle' }} />
+            <NoSR>Cart</NoSR>
+            <FaShoppingCart title="Cart" style={{ verticalAlign: 'middle' }} />
             {quantity > 0 && <Count ref={countEl}>{quantity}</Count>}
           </MenuItem>
         </Right>

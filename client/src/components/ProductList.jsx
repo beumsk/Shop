@@ -4,10 +4,26 @@ import Product from './Product';
 import axios from 'axios';
 import { Subtitle } from '../pages/Cart.styled';
 import { Link } from 'react-router-dom';
+import { BASE_URL } from '../requestMethods';
 
 const Container = styled.div`
   padding: 20px;
   text-align: center;
+`;
+
+const Loading = styled.div`
+  width: 40px;
+  height: 40px;
+  margin: auto;
+  border: solid 4px #ddd;
+  border-top-color: #999;
+  border-radius: 9999px;
+  @keyframes loading {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  animation: loading infinite 1s ease-in-out;
 `;
 
 const ProductContainer = styled.div`
@@ -28,14 +44,16 @@ const ButtonLink = styled(Link)`
 `;
 
 const ProductList = ({ cat, search, filters, sort, except, count }) => {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-
-  const BASE_URL = 'http://localhost:5000/api/';
 
   useEffect(() => {
     const getProducts = async () => {
       try {
+        setLoading(true);
+        setError('');
         const res = await axios.get(
           `${BASE_URL}products${cat ? '?category=' + cat : ''}`
         );
@@ -53,7 +71,10 @@ const ProductList = ({ cat, search, filters, sort, except, count }) => {
           setFilteredProducts(res.data);
         }
       } catch (err) {
-        console.error(err);
+        // console.error(err);
+        setError(err);
+      } finally {
+        setLoading(false);
       }
     };
     getProducts();
@@ -95,13 +116,19 @@ const ProductList = ({ cat, search, filters, sort, except, count }) => {
             <Product item={item} key={item._id} />
           ))}
 
-        {filteredProducts.length === 0 && (
+        {!loading && filteredProducts.length === 0 && (
           <Subtitle style={{ flexBasis: '100%', marginBottom: '20px' }}>
             There are no products matching your search and filters
           </Subtitle>
         )}
+
+        {loading && (
+          <Loading role="progressbar" style={{ marginBottom: '20px' }} />
+        )}
       </ProductContainer>
-      {count && <ButtonLink to="/products">Check out all products</ButtonLink>}
+      {filteredProducts.length > 0 && (
+        <ButtonLink to="/products">Check out all products</ButtonLink>
+      )}
     </Container>
   );
 };

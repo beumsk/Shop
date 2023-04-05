@@ -70,7 +70,7 @@ const Product = ({ item }) => {
   };
 
   return (
-    <Container>
+    <Container data-testid={`product-${item._id}`}>
       <LinkTitle to={'/product/' + item._id}>
         <Title>{item.title}</Title>
       </LinkTitle>
