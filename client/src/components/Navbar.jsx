@@ -102,6 +102,9 @@ const MenuItem = styled(Link)`
 
 const MenuItemProduct = styled(MenuItem)`
   color: #319795;
+  &:hover {
+    color: #43c2bf;
+  }
   @keyframes roll {
     90% {
       transform: scale(1);
@@ -218,9 +221,6 @@ const Navbar = () => {
             <>
               <MenuItem to="/profile">Profile</MenuItem>
               <Logout onClick={onLogout}>Logout</Logout>
-              <MenuItem to="/wishlist">
-                <FaHeart style={{ verticalAlign: 'middle' }} />
-              </MenuItem>
             </>
           )}
           {!user && (
@@ -233,6 +233,14 @@ const Navbar = () => {
             <NoSR>Products</NoSR>
             <FaTshirt title="Products" style={{ verticalAlign: 'middle' }} />
           </MenuItemProduct>
+          {user && (
+            <>
+              <MenuItem to="/wishlist">
+                <NoSR>Wishlist</NoSR>
+                <FaHeart style={{ verticalAlign: 'middle' }} />
+              </MenuItem>
+            </>
+          )}
           <MenuItem to="/cart">
             <NoSR>Cart</NoSR>
             <FaShoppingCart title="Cart" style={{ verticalAlign: 'middle' }} />

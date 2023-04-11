@@ -105,9 +105,44 @@ test('filtering and sorting are working', async () => {
   const productTitle = screen.getByRole('heading', { name: /products/i });
   expect(productTitle).toBeInTheDocument();
 
-  // TODO: test filtering
+  // test filtering
+  expect(
+    screen.getByRole('option', {
+      name: /select a color/i,
+    }).selected
+  ).toBeTruthy();
+  await user.selectOptions(
+    screen.getAllByRole('combobox')[0],
+    screen.getByRole('option', { name: 'White' })
+  );
+  expect(
+    screen.getByRole('option', {
+      name: /white/i,
+    }).selected
+  ).toBeTruthy();
+  let displayedProducts = await screen.findAllByTestId(/^product-/);
+  expect(displayedProducts).toHaveLength(1);
+  expect(screen.getByText('cougar tshirt')).toBeInTheDocument();
 
-  // TODO: test sorting
+  // test reset
+  await user.click(screen.getByRole('button', { name: /reset/i }));
+  displayedProducts = await screen.findAllByTestId(/^product-/);
+  expect(displayedProducts).toHaveLength(7);
+
+  // test sorting
+  await user.selectOptions(
+    screen.getAllByRole('combobox')[2],
+    screen.getByRole('option', { name: /asc/i })
+  );
+  expect(
+    screen.getByRole('option', {
+      name: /asc/i,
+    }).selected
+  ).toBeTruthy();
+  displayedProducts = await screen.findAllByTestId(/^product-/);
+  expect(displayedProducts).toHaveLength(7);
+  console.log(displayedProducts[0]);
+  expect(displayedProducts[0]).toHaveTextContent(/cap regular/i);
 });
 
 test('register is working', async () => {
