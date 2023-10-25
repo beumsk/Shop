@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import styled from 'styled-components';
-import { mq } from '../responsive';
+import { useEffect } from "react";
+import styled from "styled-components";
+import { mq } from "../responsive";
 
 const FilterContainer = styled.div`
   padding: 20px;
@@ -9,7 +9,7 @@ const FilterContainer = styled.div`
   align-items: end;
   gap: 20px;
   justify-content: space-between;
-  ${mq({ justifyContent: 'unset' }, 600)}
+  ${mq({ justifyContent: "unset" }, 600)}
 `;
 
 const Filter = styled.div``;
@@ -42,7 +42,21 @@ const Reset = styled.button`
   }
 `;
 
-const Filters = ({ setFilters, filters, setSort, sort, cat, search }) => {
+const Filters = ({
+  setFilters,
+  filters,
+  setSort,
+  sort,
+  cat,
+  search,
+}: {
+  setFilters: any;
+  filters: any;
+  setSort: any;
+  sort: any;
+  cat?: any;
+  search?: any;
+}) => {
   useEffect(() => {
     handleReset();
   }, [cat, search]);
@@ -59,8 +73,8 @@ const Filters = ({ setFilters, filters, setSort, sort, cat, search }) => {
   };
 
   const handleReset = () => {
-    setFilters({ color: '', size: '' });
-    setSort('newest');
+    setFilters({ color: "", size: "" });
+    setSort("newest");
   };
 
   return (

@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import Announcement from '../components/Announcement';
-import Footer from '../components/Footer';
-import Navbar from '../components/Navbar';
-import Newsletter from '../components/Newsletter';
-import { emptyCart } from '../redux/cartRedux';
-import { userRequest } from '../requestMethods';
-import { mq } from '../responsive';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import Announcement from "../components/Announcement";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import Newsletter from "../components/Newsletter";
+import { emptyCart } from "../redux/cartRedux";
+import { userRequest } from "../requestMethods";
+import { mq } from "../responsive";
 
 const Container = styled.div``;
 
@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding: 80px 20px;
-  ${mq({ padding: '160px 20px' }, 900)}
+  ${mq({ padding: "160px 20px" }, 900)}
 `;
 
 const Title = styled.h1`
@@ -86,12 +86,12 @@ const Linkk = styled(Link)`
 `;
 
 const Success = () => {
-  const location = useLocation();
+  const location = useLocation() as any;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const data = location.state?.stripeData;
   const cart = location.state?.cart;
-  const currentUser = useSelector((state) => state.user.currentUser);
+  const currentUser = useSelector((state: any) => state.user.currentUser);
   const [orderId, setOrderId] = useState(null);
 
   useEffect(() => {
@@ -101,7 +101,7 @@ const Success = () => {
   useEffect(() => {
     const createOrder = async () => {
       try {
-        const res = await userRequest.post('/orders', {
+        const res = await userRequest.post("/orders", {
           userId: currentUser._id,
           products: cart.products.map((item) => ({
             productId: item._id,
@@ -128,16 +128,12 @@ const Success = () => {
       <Navbar />
       <Announcement />
       <Wrapper>
-        <Title>
-          {data
-            ? 'Congratulations!'
-            : 'Your order faced an error, you will be redirected.'}
-        </Title>
+        <Title>{data ? "Congratulations!" : "Your order faced an error, you will be redirected."}</Title>
         {data && (
           <Subtitle>
             {orderId
               ? `Your order has been created successfully. Your order number is: ${orderId}`
-              : 'Your order is being prepared...'}
+              : "Your order is being prepared..."}
           </Subtitle>
         )}
         {orderId && (
@@ -158,7 +154,7 @@ const Success = () => {
                   {cart.products.map((p) => (
                     <Tr key={p._id}>
                       <Td>
-                        <ItemLink to={'/product/' + p._id}>{p.title}</ItemLink>
+                        <ItemLink to={"/product/" + p._id}>{p.title}</ItemLink>
                       </Td>
                       <Td>{p.size}</Td>
                       <Td>{p.color}</Td>

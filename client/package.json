@@ -7,6 +7,10 @@
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.4.0",
     "@testing-library/user-event": "14.4.3",
+    "@types/jest": "^29.5.6",
+    "@types/node": "^20.8.8",
+    "@types/react": "^18.2.31",
+    "@types/react-dom": "^18.2.14",
     "axios": "0.26.1",
     "dotenv": "10.0.0",
     "msw": "1.2.1",
@@ -20,6 +24,7 @@
     "redux-persist": "6.0.0",
     "sass": "1.49.9",
     "styled-components": "5.3.3",
+    "typescript": "^5.2.2",
     "web-vitals": "1.0.1"
   },
   "scripts": {
@@ -27,6 +32,14 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "resolutions": {
+    "@typescript-eslint/eslint-plugin": "6.0.0",
+    "@typescript-eslint/parser": "6.0.0"
+  },
+  "overrides": {
+    "@typescript-eslint/eslint-plugin": "6.0.0",
+    "@typescript-eslint/parser": "6.0.0"
   },
   "eslintConfig": {
     "extends": [

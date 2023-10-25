@@ -1,8 +1,8 @@
-import { FaHeart, FaSearch } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateWishlist } from '../redux/userRedux';
+import { FaHeart, FaSearch } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { updateWishlist } from "../redux/userRedux";
 
 const Container = styled.div`
   flex: 1;
@@ -62,7 +62,7 @@ const Icon = styled.div`
 `;
 
 const Product = ({ item }) => {
-  const user = useSelector((state) => state.user?.currentUser);
+  const user = useSelector((state: any) => state.user?.currentUser);
   const dispatch = useDispatch();
 
   const handleHeart = (prod) => {
@@ -71,16 +71,16 @@ const Product = ({ item }) => {
 
   return (
     <Container data-testid={`product-${item._id}`}>
-      <LinkTitle to={'/product/' + item._id}>
+      <LinkTitle to={"/product/" + item._id}>
         <Title>{item.title}</Title>
       </LinkTitle>
 
-      <LinkImage to={'/product/' + item._id}>
+      <LinkImage to={"/product/" + item._id}>
         <Image src={item.img} alt={item.title} />
       </LinkImage>
 
       <Icons>
-        <Link to={'/product/' + item._id}>
+        <Link to={"/product/" + item._id}>
           <Icon>
             <FaSearch />
           </Icon>
@@ -89,9 +89,7 @@ const Product = ({ item }) => {
           <Icon onClick={() => handleHeart(item)}>
             <FaHeart
               style={{
-                color: user?.wishlist.some((w) => w._id === item._id)
-                  ? 'red'
-                  : null,
+                color: user?.wishlist.some((w) => w._id === item._id) ? "red" : undefined,
               }}
             />
           </Icon>

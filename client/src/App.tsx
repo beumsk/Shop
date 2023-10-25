@@ -1,11 +1,6 @@
 import { useEffect } from 'react';
-import {
-  BrowserRouter,
-  Navigate,
-  Routes,
-  Route,
-  useLocation,
-} from 'react-router-dom';
+import { BrowserRouter, Navigate, Routes, Route, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Cart from './pages/Cart';
 import Success from './pages/Success';
 import Home from './pages/Home';
@@ -17,7 +12,6 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import Wishlist from './pages/Wishlist';
 import NotFound from './pages/NotFound';
-import { useSelector } from 'react-redux';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -28,7 +22,7 @@ const ScrollToTop = () => {
 };
 
 const App = () => {
-  const user = useSelector((state) => state.user.currentUser);
+  const user = useSelector((state: any) => state.user.currentUser);
 
   return (
     <BrowserRouter>
@@ -48,22 +42,10 @@ const App = () => {
           <Route path="cart" element={<Cart />} />
           {/* TODO: prevent reaching success without payment */}
           <Route path="success" element={<Success />} />
-          <Route
-            path="login"
-            element={user ? <Navigate to="/" replace /> : <Login />}
-          />
-          <Route
-            path="register"
-            element={user ? <Navigate to="/" replace /> : <Register />}
-          />
-          <Route
-            path="profile"
-            element={user ? <Profile /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="wishlist"
-            element={user ? <Wishlist /> : <Navigate to="/login" />}
-          />
+          <Route path="login" element={user ? <Navigate to="/" replace /> : <Login />} />
+          <Route path="register" element={user ? <Navigate to="/" replace /> : <Register />} />
+          <Route path="profile" element={user ? <Profile /> : <Navigate to="/login" />} />
+          <Route path="wishlist" element={user ? <Wishlist /> : <Navigate to="/login" />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -1,24 +1,24 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FaHeart, FaMinus, FaPlus } from 'react-icons/fa';
-import styled from 'styled-components';
-import Announcement from '../components/Announcement';
-import Footer from '../components/Footer';
-import Navbar from '../components/Navbar';
-import Newsletter from '../components/Newsletter';
-import ProductList from '../components/ProductList';
-import { mq } from '../responsive';
-import { publicRequest } from '../requestMethods';
-import { addProduct } from '../redux/cartRedux';
-import { updateWishlist } from '../redux/userRedux';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FaHeart, FaMinus, FaPlus } from "react-icons/fa";
+import styled from "styled-components";
+import Announcement from "../components/Announcement";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import Newsletter from "../components/Newsletter";
+import ProductList from "../components/ProductList";
+import { mq } from "../responsive";
+import { publicRequest } from "../requestMethods";
+import { addProduct } from "../redux/cartRedux";
+import { updateWishlist } from "../redux/userRedux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 20px;
   position: relative;
-  ${mq({ display: 'flex', padding: '50px 20px' }, 600)}
+  ${mq({ display: "flex", padding: "50px 20px" }, 600)}
 `;
 
 const Previous = styled.p`
@@ -43,7 +43,7 @@ const Image = styled.img`
   max-height: 60vh;
   object-fit: contain;
   margin-bottom: 16px;
-  ${mq({ margin: '0' }, 600)}
+  ${mq({ margin: "0" }, 600)}
 `;
 
 const HeartContainer = styled.div`
@@ -63,7 +63,7 @@ const HeartContainer = styled.div`
 
 const InfoContainer = styled.div`
   flex: 1;
-  ${mq({ padding: '0 0 0 40px' }, 600)}
+  ${mq({ padding: "0 0 0 40px" }, 600)}
 `;
 
 const Title = styled.h1`
@@ -102,7 +102,7 @@ const Price = styled.p`
 const FilterContainer = styled.div`
   width: 100%;
   margin-top: 16px;
-  ${mq({ display: 'flex', justifyContent: 'space-between' }, 900)}
+  ${mq({ display: "flex", justifyContent: "space-between" }, 900)}
 `;
 
 const Filter = styled.div`
@@ -125,7 +125,7 @@ const FilterColor = styled.div`
   color: ${(p) => p.color};
   margin-right: 8px;
   cursor: pointer;
-  border: ${(p) => (p.selected ? 'solid 1px #319795' : 'solid 1px #A0AEC0')};
+  border: ${(p) => (p.selected ? "solid 1px #319795" : "solid 1px #A0AEC0")};
   &:hover {
     opacity: ${(p) => (p.selected ? 1 : 0.6)};
   }
@@ -149,7 +149,7 @@ const AmountContainer = styled.div`
     cursor: pointer;
     &:first-of-type {
       opacity: ${(p) => (p.show ? 1 : 0)};
-      cursor: ${(p) => (p.show ? 'pointer' : 'default')};
+      cursor: ${(p) => (p.show ? "pointer" : "default")};
     }
   }
 `;
@@ -202,21 +202,21 @@ const Title2 = styled.p`
 const Product = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const id = location.pathname.split('/')[2];
-  const [product, setProduct] = useState({});
+  const id = location.pathname.split("/")[2];
+  const [product, setProduct] = useState<any>({});
   const [quantity, setQuantity] = useState(1);
-  const [color, setColor] = useState('');
-  const [size, setSize] = useState('');
-  const [help, setHelp] = useState('');
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
+  const [help, setHelp] = useState("");
   const [anim, setAnim] = useState(false);
   const [CTA, setCTA] = useState(false);
-  const user = useSelector((state) => state.user?.currentUser);
+  const user = useSelector((state: any) => state.user?.currentUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const res = await publicRequest.get('/products/find/' + id);
+        const res = await publicRequest.get("/products/find/" + id);
         setProduct(res.data);
         setColor(res.data.color[0]);
         setSize(res.data.size[0]);
@@ -229,16 +229,16 @@ const Product = () => {
 
   const handleColor = (c) => {
     setColor(c);
-    setHelp(size ? '' : 'Size must be selected');
+    setHelp(size ? "" : "Size must be selected");
   };
 
   const handleSize = (e) => {
     setSize(e.target.value);
-    setHelp(color ? '' : 'Color must be selected');
+    setHelp(color ? "" : "Color must be selected");
   };
 
   const handleQuantity = (type) => {
-    if (type === 'dec') {
+    if (type === "dec") {
       quantity > 1 && setQuantity(quantity - 1);
     } else {
       setQuantity(quantity + 1);
@@ -248,11 +248,11 @@ const Product = () => {
   const handleCart = () => {
     if (color && size) {
       dispatch(addProduct({ ...product, quantity, color, size }));
-      setHelp('');
+      setHelp("");
       setAnim(true);
       setCTA(true);
     } else {
-      setHelp('Color and size must be selected');
+      setHelp("Color and size must be selected");
     }
   };
 
@@ -272,9 +272,7 @@ const Product = () => {
             <HeartContainer onClick={() => handleHeart(product)}>
               <FaHeart
                 style={{
-                  color: user?.wishlist.some((w) => w._id === product?._id)
-                    ? 'red'
-                    : null,
+                  color: user?.wishlist.some((w) => w._id === product?._id) ? "red" : undefined,
                 }}
               />
             </HeartContainer>
@@ -285,7 +283,7 @@ const Product = () => {
           <Desc>{product?.desc}</Desc>
           <Categories>
             {product?.categories?.map((c) => (
-              <Category key={c} to={'/products/' + c}>
+              <Category key={c} to={"/products/" + c}>
                 {c}
               </Category>
             ))}
@@ -295,13 +293,7 @@ const Product = () => {
             <Filter>
               <FilterTitle>Color</FilterTitle>
               {product?.color?.map((c) => (
-                <FilterColor
-                  key={c}
-                  title={c}
-                  color={c}
-                  onClick={() => handleColor(c)}
-                  selected={color === c}
-                />
+                <FilterColor key={c} title={c} color={c} onClick={() => handleColor(c)} selected={color === c} />
               ))}
             </Filter>
             <Filter>
@@ -319,23 +311,18 @@ const Product = () => {
 
           <AmountContainer show={quantity > 1 ? true : null}>
             <FilterTitle>Quantity</FilterTitle>
-            <FaMinus onClick={() => handleQuantity('dec')} />
+            <FaMinus onClick={() => handleQuantity("dec")} />
             <Amount>{quantity}</Amount>
-            <FaPlus onClick={() => handleQuantity('inc')} />
+            <FaPlus onClick={() => handleQuantity("inc")} />
           </AmountContainer>
           {help && <Help>{help}</Help>}
-          <Button
-            onClick={handleCart}
-            onAnimationEnd={() => setAnim(false)}
-            className={anim ? 'animated' : ''}>
+          <Button onClick={handleCart} onAnimationEnd={() => setAnim(false)} className={anim ? "animated" : ""}>
             Add to cart
           </Button>
           {CTA && (
             <>
-              <Button onClick={() => navigate('/products')}>
-                Find other products
-              </Button>
-              <Button onClick={() => navigate('/cart')}>Go to cart</Button>
+              <Button onClick={() => navigate("/products")}>Find other products</Button>
+              <Button onClick={() => navigate("/cart")}>Go to cart</Button>
             </>
           )}
         </InfoContainer>

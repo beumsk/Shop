@@ -1,4 +1,5 @@
 import {
+  logRoles,
   render,
   screen,
   waitFor,
@@ -28,16 +29,47 @@ const FullApp = (
 // expect(shopTitle).toHaveAttribute('href', '/');
 // });
 
-// add testing for server
-test('returns products on succesful fetch', async () => {
+// TODO: change test to make it go to products to product
+test('navigation is working from home to products to product', async () => {
+  const user = userEvent.setup();
+
   render(FullApp);
-  // ensure loading correctly appearsa and disappear
+
+  const productsNav = screen.getByRole('link', { name: /products/i });
+  await user.click(productsNav);
+  const productsTitle = screen.getByRole('heading', { name: /products/i });
+  expect(productsTitle).toBeInTheDocument();
+
+  const pumaTee = screen.getByRole('heading', { name: /puma tshirt/i });
+  await user.click(pumaTee);
+
+  // TODO: add single product fake call
+  // const pumaTitle = screen.getByRole('heading', { name: /puma tshirt/i });
+  // expect(pumaTitle).toBeInTheDocument();
+});
+
+test('returns products on succesful fetch', async () => {
+  const user = userEvent.setup();
+
+  render(FullApp);
+
+  // ensure we are on homepage
+  const shopNav = screen.getByRole('link', { name: /shop/i });
+  await user.click(shopNav);
+  const shopTitle = screen.getByRole('heading', { name: /autumn collection/i });
+
+  expect(shopTitle).toBeInTheDocument();
+  // ensure loading correctly appears and disappear
   await waitForElementToBeRemoved(() => screen.queryByRole('progressbar'));
   // screen.debug();
   const displayedProducts = await screen.findAllByTestId(/^product-/);
   expect(displayedProducts).toHaveLength(6);
   expect(screen.getByText('puma tshirt')).toBeInTheDocument();
   expect(screen.getByText('cougar tshirt')).toBeInTheDocument();
+
+  const lg = document.createElement('div');
+  lg.innerHTML = `<p>oui<p>`;
+  logRoles(lg);
 });
 
 test('no matching products', async () => {
@@ -155,7 +187,59 @@ test('register is working', async () => {
   const registerTitle = screen.getByRole('heading', { name: /register/i });
   expect(registerTitle).toBeInTheDocument();
 
+  // test register form logic
+  const registerButton = screen.getByRole('button', { name: /register/i });
+  expect(registerButton).toBeDisabled();
+
+  const name = screen.getByLabelText('Name');
+  await user.type(name, 'T');
+  expect(screen.getByText('Name length < 3')).toBeInTheDocument();
+  await user.type(name, 'Test');
+  expect(screen.queryByText('Name length < 3')).not.toBeInTheDocument();
+
+  const lastname = screen.getByLabelText('Last name');
+  await user.type(lastname, 'T');
+  expect(screen.getByText('Last name length < 3')).toBeInTheDocument();
+  await user.type(lastname, 'Test');
+  expect(screen.queryByText('Last name length < 3')).not.toBeInTheDocument();
+
+  const username = screen.getByLabelText('Username');
+  await user.type(username, 'T');
+  expect(screen.getByText('Username length < 3')).toBeInTheDocument();
+  await user.type(username, 'Test');
+  expect(screen.queryByText('Username length < 3')).not.toBeInTheDocument();
+
+  const email = screen.getByLabelText('Email');
+  await user.type(email, 't@t');
+  expect(screen.getByText('Must be an email')).toBeInTheDocument();
+  await user.type(email, 't@t.t');
+  expect(screen.queryByText('Must be an email')).not.toBeInTheDocument();
+
+  const password = screen.getByLabelText('Password');
+  await user.type(password, 't');
+  expect(screen.getByText('Password length < 6')).toBeInTheDocument();
+  await user.type(password, 'tttttt');
+  expect(screen.queryByText('Password length < 6')).not.toBeInTheDocument();
+
+  const password2 = screen.getByLabelText('Confirm password');
+  await user.type(password2, 't');
+  expect(screen.getByText('Passwords must match')).toBeInTheDocument();
+  await user.type(password2, 'tttttt');
+  expect(screen.queryByText('Passwords must match')).not.toBeInTheDocument();
+
+  expect(registerButton).toBeEnabled();
+
   // TODO: register test
+  // await user.click(registerButton);
+  // console.log(mswServer);
+  // await waitFor(() => expect(mswServer.handlers[0]).toHaveBeenCalledTimes(1));
+
+  // const requestBody = JSON.parse(mswServer.handlers[1].mockedResponse.body);
+  // expect(requestBody).toEqual({
+  //   name: 'John Doe',
+  //   email: 'john@example.com',
+  //   password: 'password',
+  // });
 });
 
 test('login and logout are working', async () => {

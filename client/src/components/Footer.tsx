@@ -1,14 +1,14 @@
-import { FaFacebook, FaInstagram, FaPinterest } from 'react-icons/fa';
-import { FiMail, FiMapPin, FiPhone } from 'react-icons/fi';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { mq } from '../responsive';
+import { FaFacebook, FaInstagram, FaPinterest } from "react-icons/fa";
+import { FiMail, FiMapPin, FiPhone } from "react-icons/fi";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { mq } from "../responsive";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  ${mq({ flexDirection: 'row', padding: '16px' }, 600)};
+  ${mq({ flexDirection: "row", padding: "16px" }, 600)};
 `;
 
 const Left = styled.div`
@@ -41,7 +41,7 @@ const Center = styled.div`
   flex: 1;
   padding: 16px;
   display: none;
-  ${mq({ display: 'unset' }, 600)}
+  ${mq({ display: "unset" }, 600)}
 `;
 
 const Title = styled.h3`
@@ -69,7 +69,7 @@ const Right = styled.div`
   flex: 1;
   padding: 16px;
   background: #fff8f8;
-  ${mq({ background: 'transparent' }, 600)};
+  ${mq({ background: "transparent" }, 600)};
 `;
 
 const ContactItem = styled.div`
@@ -82,7 +82,7 @@ const ContactItem = styled.div`
 `;
 
 const Footer = () => {
-  const user = useSelector((state) => state.user?.currentUser);
+  const user = useSelector((state: any) => state.user?.currentUser);
 
   return (
     <Container>

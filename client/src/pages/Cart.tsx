@@ -1,19 +1,14 @@
-import { useEffect, useState } from 'react';
-import { FaMinus, FaPlus } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import StripeCheckout from 'react-stripe-checkout';
-import Announcement from '../components/Announcement';
-import Footer from '../components/Footer';
-import Navbar from '../components/Navbar';
-import { userRequest } from '../requestMethods';
-import {
-  updateProductDec,
-  updateProductInc,
-  removeProduct,
-  emptyCart,
-} from '../redux/cartRedux';
-import Newsletter from '../components/Newsletter';
+import { useEffect, useState } from "react";
+import { FaMinus, FaPlus } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import StripeCheckout from "react-stripe-checkout";
+import Announcement from "../components/Announcement";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import { userRequest } from "../requestMethods";
+import { updateProductDec, updateProductInc, removeProduct, emptyCart } from "../redux/cartRedux";
+import Newsletter from "../components/Newsletter";
 import {
   Container,
   Wrapper,
@@ -42,15 +37,15 @@ import {
   SummaryItemText,
   Button,
   ButtonClear,
-} from './Cart.styled';
-import Modal from '../components/Modal';
+} from "./Cart.styled";
+import Modal from "../components/Modal";
 
-const KEY = process.env.REACT_APP_STRIPE;
+const KEY = process.env.REACT_APP_STRIPE || "";
 
 const Cart = () => {
-  const cart = useSelector((state) => state.cart);
-  const user = useSelector((state) => state.user?.currentUser);
-  const [stripeToken, setStripeToken] = useState(null);
+  const cart = useSelector((state: any) => state.cart);
+  const user = useSelector((state: any) => state.user?.currentUser);
+  const [stripeToken, setStripeToken] = useState<any>(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -61,11 +56,11 @@ const Cart = () => {
   useEffect(() => {
     const makeRequest = async () => {
       try {
-        const res = await userRequest.post('/checkout/payment', {
+        const res = await userRequest.post("/checkout/payment", {
           tokenId: stripeToken.id,
           amount: cart.total * 100,
         });
-        navigate('/success', {
+        navigate("/success", {
           state: { stripeData: res.data, cart: cart },
         });
       } catch (err) {
@@ -76,7 +71,7 @@ const Cart = () => {
   }, [stripeToken, cart.total, navigate]);
 
   const handleQuantity = (type, info) => {
-    if (type === 'dec') {
+    if (type === "dec") {
       if (info.qtt === 1) {
         dispatch(removeProduct({ index: info.index }));
       } else {
@@ -101,14 +96,12 @@ const Cart = () => {
       <Announcement />
       <Wrapper>
         <Title>Your cart ({cart.quantity})</Title>
-        {!cart.quantity > 0 ? (
+        {!(cart.quantity > 0) ? (
           <EmptyCart>
             <Subtitle>Your cart is currently empty...</Subtitle>
             <TopButton to="/products">Find great items for your cart</TopButton>
             {user && user.wishlist.length > 0 && (
-              <TopButton to="/wishlist">
-                Your Wishlist ({user.wishlist.length})
-              </TopButton>
+              <TopButton to="/wishlist">Your Wishlist ({user.wishlist.length})</TopButton>
             )}
           </EmptyCart>
         ) : (
@@ -116,9 +109,7 @@ const Cart = () => {
             <Top>
               <TopButton to="/products">Continue shopping</TopButton>
               {user && user.wishlist.length > 0 && (
-                <TopButton to="/wishlist">
-                  Your Wishlist ({user.wishlist.length})
-                </TopButton>
+                <TopButton to="/wishlist">Your Wishlist ({user.wishlist.length})</TopButton>
               )}
             </Top>
 
@@ -126,13 +117,13 @@ const Cart = () => {
               <Info>
                 {cart.products.map((p, index) => (
                   <Product key={p._id}>
-                    <Link to={'/product/' + p._id}>
+                    <Link to={"/product/" + p._id}>
                       <Image src={p.img} />
                     </Link>
                     <ProductDetail>
                       <Details>
                         <ProductName>
-                          <Link to={'/product/' + p._id}>{p.title}</Link>
+                          <Link to={"/product/" + p._id}>{p.title}</Link>
                         </ProductName>
                         <ProductColor color={p.color} title={p.color} />
                         <ProductSize>
@@ -144,19 +135,20 @@ const Cart = () => {
                           {p.quantity === 1 ? (
                             <Modal
                               onClose={() =>
-                                handleQuantity('dec', {
+                                handleQuantity("dec", {
                                   index,
                                   qtt: p.quantity,
                                 })
                               }
                               color="#e53e3e"
-                              title="Are you sure to remove this item?">
-                              <FaMinus style={{ color: '#e53e3e' }} />
+                              title="Are you sure to remove this item?"
+                            >
+                              <FaMinus style={{ color: "#e53e3e" }} />
                             </Modal>
                           ) : (
                             <FaMinus
                               onClick={() =>
-                                handleQuantity('dec', {
+                                handleQuantity("dec", {
                                   index,
                                   qtt: p.quantity,
                                 })
@@ -168,7 +160,7 @@ const Cart = () => {
 
                           <FaPlus
                             onClick={() =>
-                              handleQuantity('inc', {
+                              handleQuantity("inc", {
                                 index,
                                 qtt: p.quantity,
                               })
@@ -210,22 +202,16 @@ const Cart = () => {
                     amount={cart.total * 100}
                     currency="EUR"
                     token={onToken}
-                    disabled={cart.total === 0}
-                    stripeKey={KEY}>
-                    <Button>
-                      {stripeToken ? 'Processing...' : 'CHECKOUT NOW'}
-                    </Button>
-                  </StripeCheckout>
+                    // disabled={cart.total === 0}
+                    stripeKey={KEY}
+                  ></StripeCheckout>
                 ) : (
-                  <Button onClick={() => navigate('/login')}>CHECKOUT</Button>
+                  <Button onClick={() => navigate("/login")}>CHECKOUT</Button>
                 )}
               </Summary>
             </Bottom>
 
-            <Modal
-              onClose={() => dispatch(emptyCart())}
-              color="#e53e3e"
-              title="Are you sure to clear your cart?">
+            <Modal onClose={() => dispatch(emptyCart())} color="#e53e3e" title="Are you sure to clear your cart?">
               <ButtonClear>Clear your cart</ButtonClear>
             </Modal>
           </>

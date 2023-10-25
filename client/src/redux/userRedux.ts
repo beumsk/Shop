@@ -1,10 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { userRequest } from '../requestMethods';
+import { createSlice } from "@reduxjs/toolkit";
+import { userRequest } from "../requestMethods";
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState: {
-    currentUser: null,
+    currentUser: null as any | null,
     isFetching: false,
     error: false,
   },
@@ -25,13 +25,9 @@ const userSlice = createSlice({
       state.currentUser = null;
     },
     updateWishlist: (state, action) => {
-      if (
-        state.currentUser.wishlist.some((w) => w._id === action.payload._id)
-      ) {
+      if (state.currentUser.wishlist.some((w) => w._id === action.payload._id)) {
         state.currentUser.wishlist.splice(
-          state.currentUser.wishlist.findIndex(
-            (w) => w._id === action.payload._id
-          ),
+          state.currentUser.wishlist.findIndex((w) => w._id === action.payload._id),
           1
         );
       } else {
@@ -39,7 +35,7 @@ const userSlice = createSlice({
       }
       const syncWishlist = async () => {
         try {
-          await userRequest.put('/users/' + state.currentUser._id, {
+          await userRequest.put("/users/" + state.currentUser._id, {
             wishlist: state.currentUser.wishlist,
           });
         } catch (err) {
@@ -51,11 +47,5 @@ const userSlice = createSlice({
   },
 });
 
-export const {
-  loginStart,
-  loginSuccess,
-  loginFailure,
-  logoutUser,
-  updateWishlist,
-} = userSlice.actions;
+export const { loginStart, loginSuccess, loginFailure, logoutUser, updateWishlist } = userSlice.actions;
 export default userSlice.reducer;

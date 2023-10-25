@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import Product from './Product';
-import axios from 'axios';
-import { Subtitle } from '../pages/Cart.styled';
-import { Link } from 'react-router-dom';
-import { BASE_URL } from '../requestMethods';
+import { useState, useEffect } from "react";
+import styled from "styled-components";
+import Product from "./Product";
+import axios from "axios";
+import { Subtitle } from "../pages/Cart.styled";
+import { Link } from "react-router-dom";
+import { BASE_URL } from "../requestMethods";
 
 const Container = styled.div`
   padding: 20px;
@@ -43,20 +43,32 @@ const ButtonLink = styled(Link)`
   }
 `;
 
-const ProductList = ({ cat, search, filters, sort, except, count }) => {
+const ProductList = ({
+  cat,
+  search,
+  filters,
+  sort,
+  except,
+  count,
+}: {
+  cat?: any;
+  search?: any;
+  filters?: any;
+  sort?: any;
+  except?: any;
+  count?: number;
+}) => {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [error, setError] = useState<string>("");
+  const [products, setProducts] = useState<any | []>([]);
+  const [filteredProducts, setFilteredProducts] = useState<any | []>([]);
 
   useEffect(() => {
     const getProducts = async () => {
       try {
         setLoading(true);
-        setError('');
-        const res = await axios.get(
-          `${BASE_URL}products${cat ? '?category=' + cat : ''}`
-        );
+        setError("");
+        const res = await axios.get(`${BASE_URL}products${cat ? "?category=" + cat : ""}`);
         if (!!search) {
           const filteredData = [...res.data].filter(
             (p) =>
@@ -70,7 +82,7 @@ const ProductList = ({ cat, search, filters, sort, except, count }) => {
           setProducts(res.data);
           setFilteredProducts(res.data);
         }
-      } catch (err) {
+      } catch (err: any) {
         // console.error(err);
         setError(err);
       } finally {
@@ -84,25 +96,21 @@ const ProductList = ({ cat, search, filters, sort, except, count }) => {
     setFilteredProducts(
       products?.filter((item) =>
         Object.entries(filters)?.every(([key, value]) => {
-          return value !== '' ? item[key].includes(value) : item[key];
+          return value !== "" ? item[key].includes(value) : item[key];
         })
       )
     );
   }, [filters]);
 
   useEffect(() => {
-    if (sort === 'newest') {
+    if (sort === "newest") {
       setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+        [...prev].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
       );
-    } else if (sort === 'asc') {
-      setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => a.price - b.price)
-      );
-    } else if (sort === 'desc') {
-      setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => b.price - a.price)
-      );
+    } else if (sort === "asc") {
+      setFilteredProducts((prev) => [...prev].sort((a, b) => a.price - b.price));
+    } else if (sort === "desc") {
+      setFilteredProducts((prev) => [...prev].sort((a, b) => b.price - a.price));
     }
   }, [sort]);
 
@@ -117,18 +125,14 @@ const ProductList = ({ cat, search, filters, sort, except, count }) => {
           ))}
 
         {!loading && filteredProducts.length === 0 && (
-          <Subtitle style={{ flexBasis: '100%', marginBottom: '20px' }}>
+          <Subtitle style={{ flexBasis: "100%", marginBottom: "20px" }}>
             There are no products matching your search and filters
           </Subtitle>
         )}
 
-        {loading && (
-          <Loading role="progressbar" style={{ marginBottom: '20px' }} />
-        )}
+        {loading && <Loading role="progressbar" style={{ marginBottom: "20px" }} />}
       </ProductContainer>
-      {filteredProducts.length > 0 && (
-        <ButtonLink to="/products">Check out all products</ButtonLink>
-      )}
+      {filteredProducts.length > 0 && <ButtonLink to="/products">Check out all products</ButtonLink>}
     </Container>
   );
 };

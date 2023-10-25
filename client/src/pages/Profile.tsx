@@ -1,13 +1,13 @@
-import { Fragment, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import Announcement from '../components/Announcement';
-import Footer from '../components/Footer';
-import Navbar from '../components/Navbar';
-import Newsletter from '../components/Newsletter';
-import { logout } from '../redux/apiCalls';
-import { userRequest } from '../requestMethods';
+import { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import Announcement from "../components/Announcement";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import Newsletter from "../components/Newsletter";
+import { logout } from "../redux/apiCalls";
+import { userRequest } from "../requestMethods";
 
 const Container = styled.div``;
 
@@ -98,9 +98,9 @@ const Logout = styled.button`
 `;
 
 const Profile = () => {
-  const [orders, setOrders] = useState();
+  const [orders, setOrders] = useState<any>();
   const [showOrders, setShowOrders] = useState(false);
-  const user = useSelector((state) => state.user?.currentUser);
+  const user = useSelector((state: any) => state.user?.currentUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -117,7 +117,7 @@ const Profile = () => {
   }, []);
 
   const onLogout = () => {
-    navigate('/');
+    navigate("/");
     logout(dispatch);
   };
 
@@ -126,9 +126,7 @@ const Profile = () => {
     const day = d.getDate();
     const month = d.getMonth() + 1;
     const year = d.getFullYear();
-    return `${day < 10 ? '0' + day : day}.${
-      month < 10 ? '0' + month : month
-    }.${year}`;
+    return `${day < 10 ? "0" + day : day}.${month < 10 ? "0" + month : month}.${year}`;
   };
 
   return (
@@ -146,9 +144,7 @@ const Profile = () => {
 
         <div>
           {orders && (
-            <ShowButton onClick={() => setShowOrders(!showOrders)}>
-              {showOrders ? 'Hide' : 'Show'} orders
-            </ShowButton>
+            <ShowButton onClick={() => setShowOrders(!showOrders)}>{showOrders ? "Hide" : "Show"} orders</ShowButton>
           )}
           {showOrders &&
             orders &&
@@ -176,9 +172,7 @@ const Profile = () => {
                         {o.products.map((p) => (
                           <Tr key={p._id}>
                             <Td>
-                              <ItemLink to={'/product/' + p.productId}>
-                                {p.title}
-                              </ItemLink>
+                              <ItemLink to={"/product/" + p.productId}>{p.title}</ItemLink>
                             </Td>
                             <Td>{p.size}</Td>
                             <Td>{p.color}</Td>

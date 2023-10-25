@@ -101,10 +101,21 @@ const productsHandler = rest.get(getProductsPath, async (req, res, ctx) =>
   res(ctx.json(mockProducts))
 );
 
+const registerHandler = rest.post(
+  `${BASE_URL}/auth/register`,
+  async (req, res, ctx) =>
+    res(
+      ctx.status(200),
+      ctx.json({
+        message: 'User created successfully!',
+      })
+    )
+);
+
 export const productsHandlerException = rest.get(
   getProductsPath,
   async (req, res, ctx) =>
     res(ctx.status(500), ctx.json({ message: 'Deliberately broken request' }))
 );
 
-export const handlers = [productsHandler];
+export const handlers = [productsHandler, registerHandler];

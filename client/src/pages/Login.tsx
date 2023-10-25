@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import Footer from '../components/Footer';
-import Navbar from '../components/Navbar';
-import { login } from '../redux/apiCalls';
-import { mq } from '../responsive';
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import { login } from "../redux/apiCalls";
+import { mq } from "../responsive";
 
 const Container = styled.div`
   width: 100%;
   min-height: calc(100vh - 100px);
   padding: 40px 0;
-  background: url('/images/clothes-hanging.jpg');
+  background: url("/images/clothes-hanging.jpg");
   background-size: cover;
   background-position: center;
   display: flex;
@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   padding: 16px;
   width: 80%;
   background: white;
-  ${mq({ width: '40%' }, 600)}
+  ${mq({ width: "40%" }, 600)}
 `;
 
 const Title = styled.h1`
@@ -56,7 +56,7 @@ const Button = styled.button`
   cursor: pointer;
   margin: 16px 0;
   text-transform: uppercase;
-  ${mq({ width: '40%' }, 600)}
+  ${mq({ width: "40%" }, 600)}
   &:disabled {
     opacity: 0.6;
   }
@@ -76,13 +76,13 @@ const Linkk = styled(Link)`
 `;
 
 const Login = () => {
-  const location = useLocation();
+  const location = useLocation() as any;
   const navigate = useNavigate();
   const registerData = location.state?.form;
-  const [username, setUsername] = useState(registerData?.username || '');
-  const [password, setPassword] = useState(registerData?.password || '');
+  const [username, setUsername] = useState(registerData?.username || "");
+  const [password, setPassword] = useState(registerData?.password || "");
   const dispatch = useDispatch();
-  const { isFetching, error } = useSelector((state) => state.user);
+  const { isFetching, error } = useSelector((state: any) => state.user);
 
   const handleLogin = (e) => {
     e.preventDefault();

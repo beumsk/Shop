@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
-import { FaSearch, FaShoppingCart, FaHeart, FaTshirt } from 'react-icons/fa';
-import { mq } from '../responsive';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../redux/apiCalls';
+import { useEffect, useRef, useState } from "react";
+import styled from "styled-components";
+import { FaSearch, FaShoppingCart, FaHeart, FaTshirt } from "react-icons/fa";
+import { mq } from "../responsive";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/apiCalls";
 
 const Container = styled.div`
   position: sticky;
@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  ${mq({ padding: '10px 20px' }, 600)}
+  ${mq({ padding: "10px 20px" }, 600)}
 `;
 
 const Left = styled.div`
@@ -31,21 +31,21 @@ const Left = styled.div`
 const Language = styled.span`
   font-size: 14px;
   display: none;
-  ${mq({ display: 'unset' }, 600)}
+  ${mq({ display: "unset" }, 600)}
 `;
 
 const SearchContainer = styled.form`
   border: 1px solid #ddd;
   display: flex;
   align-items: center;
-  ${mq({ marginLeft: '16px' }, 600)};
+  ${mq({ marginLeft: "16px" }, 600)};
 `;
 
 const Input = styled.input`
   border: none;
   width: 50px;
   padding: 4px;
-  ${mq({ width: 'unset' }, 600)};
+  ${mq({ width: "unset" }, 600)};
 `;
 
 const InputButton = styled.button`
@@ -78,7 +78,7 @@ const Logo = styled(Link)`
   letter-spacing: 4px;
   margin-left: 8px;
   padding: 8px 0;
-  ${mq({ fontSize: '32px' }, 600)};
+  ${mq({ fontSize: "32px" }, 600)};
 `;
 
 const Right = styled.div`
@@ -97,7 +97,7 @@ const MenuItem = styled(Link)`
   &:hover {
     color: #666;
   }
-  ${mq({ fontSize: '14px', marginLeft: '16px' }, 600)}
+  ${mq({ fontSize: "14px", marginLeft: "16px" }, 600)}
 `;
 
 const MenuItemProduct = styled(MenuItem)`
@@ -127,7 +127,7 @@ const Logout = styled.span`
   &:hover {
     color: #666;
   }
-  ${mq({ fontSize: '14px', marginLeft: '16px' }, 600)}
+  ${mq({ fontSize: "14px", marginLeft: "16px" }, 600)}
 `;
 
 const Count = styled.div`
@@ -166,19 +166,19 @@ const NoSR = styled.span`
 `;
 
 const Navbar = () => {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const notInitialRender = useRef(false);
-  const countEl = useRef(null);
+  const countEl = useRef<any>(null);
   const dispatch = useDispatch();
-  const quantity = useSelector((state) => state.cart.quantity);
-  const user = useSelector((state) => state.user.currentUser);
+  const quantity = useSelector((state: any) => state.cart.quantity);
+  const user = useSelector((state: any) => state.user.currentUser);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (notInitialRender.current) {
-      countEl.current?.classList.add('animated');
+      countEl.current?.classList.add("animated");
       setTimeout(() => {
-        countEl.current?.classList.remove('animated');
+        countEl.current?.classList.remove("animated");
       }, 1000);
     } else {
       notInitialRender.current = true;
@@ -192,7 +192,7 @@ const Navbar = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (input?.length > 2) {
-      navigate('/search/' + input.toLowerCase(), { data: { input } });
+      navigate("/search/" + input.toLowerCase(), { state: { input } });
     }
   };
 
@@ -206,7 +206,7 @@ const Navbar = () => {
               placeholder="search"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              style={{ outlineColor: input?.length > 2 ? '' : '#E53E3E' }}
+              style={{ outlineColor: input?.length > 2 ? "" : "#E53E3E" }}
             />
             <InputButton>
               <InputIcon />
@@ -231,19 +231,19 @@ const Navbar = () => {
           )}
           <MenuItemProduct to="/products">
             <NoSR>Products</NoSR>
-            <FaTshirt title="Products" style={{ verticalAlign: 'middle' }} />
+            <FaTshirt title="Products" style={{ verticalAlign: "middle" }} />
           </MenuItemProduct>
           {user && (
             <>
               <MenuItem to="/wishlist">
                 <NoSR>Wishlist</NoSR>
-                <FaHeart style={{ verticalAlign: 'middle' }} />
+                <FaHeart style={{ verticalAlign: "middle" }} />
               </MenuItem>
             </>
           )}
           <MenuItem to="/cart">
             <NoSR>Cart</NoSR>
-            <FaShoppingCart title="Cart" style={{ verticalAlign: 'middle' }} />
+            <FaShoppingCart title="Cart" style={{ verticalAlign: "middle" }} />
             {quantity > 0 && <Count ref={countEl}>{quantity}</Count>}
           </MenuItem>
         </Right>
