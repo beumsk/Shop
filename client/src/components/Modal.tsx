@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import styled from 'styled-components';
+import { useState } from "react";
+import styled from "styled-components";
 
 const Backdrop = styled.div`
   position: fixed;
@@ -56,7 +56,7 @@ const ButtonConfirm = styled.button`
 `;
 
 const Modal = ({ onClose, color, title, children }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   function handleConfirm() {
     if (onClose) onClose();
@@ -74,9 +74,7 @@ const Modal = ({ onClose, color, title, children }) => {
             <Title color={color ? color : null}>{title}</Title>
             <ButtonContainer>
               <ButtonCancel onClick={() => setOpen(false)}>Cancel</ButtonCancel>
-              <ButtonConfirm
-                color={color ? color : null}
-                onClick={() => handleConfirm()}>
+              <ButtonConfirm color={color ? color : null} onClick={() => handleConfirm()}>
                 Confirm
               </ButtonConfirm>
             </ButtonContainer>

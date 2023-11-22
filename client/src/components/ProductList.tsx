@@ -51,17 +51,17 @@ const ProductList = ({
   except,
   count,
 }: {
-  cat?: any;
-  search?: any;
-  filters?: any;
-  sort?: any;
-  except?: any;
+  cat?: string;
+  search?: string;
+  filters?: filtersType;
+  sort?: sortType;
+  except?: string;
   count?: number;
 }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
-  const [products, setProducts] = useState<any | []>([]);
-  const [filteredProducts, setFilteredProducts] = useState<any | []>([]);
+  const [products, setProducts] = useState<productType[] | []>([]);
+  const [filteredProducts, setFilteredProducts] = useState<productType[] | []>([]);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -94,11 +94,15 @@ const ProductList = ({
 
   useEffect(() => {
     setFilteredProducts(
-      products?.filter((item) =>
-        Object.entries(filters)?.every(([key, value]) => {
-          return value !== "" ? item[key].includes(value) : item[key];
-        })
-      )
+      products?.filter((item) => {
+        if (filters) {
+          return Object.entries(filters)?.every(([key, value]) => {
+            return value !== "" ? item[key].includes(value) : item[key];
+          });
+        } else {
+          return [];
+        }
+      })
     );
   }, [filters]);
 

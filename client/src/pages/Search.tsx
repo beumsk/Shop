@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import styled from 'styled-components';
-import Announcement from '../components/Announcement';
-import Filters from '../components/Filters';
-import Footer from '../components/Footer';
-import Navbar from '../components/Navbar';
-import Newsletter from '../components/Newsletter';
-import ProductList from '../components/ProductList';
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import styled from "styled-components";
+import Announcement from "../components/Announcement";
+import Filters from "../components/Filters";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import Newsletter from "../components/Newsletter";
+import ProductList from "../components/ProductList";
 
 const Container = styled.div``;
 
@@ -19,9 +19,9 @@ const Title = styled.h1`
 
 const Search = () => {
   const location = useLocation();
-  const search = location.pathname.split('/')[2];
-  const [filters, setFilters] = useState({ color: '', size: '' });
-  const [sort, setSort] = useState('newest');
+  const search = location.pathname.split("/")[2];
+  const [filters, setFilters] = useState<filtersType>({ color: "", size: "" });
+  const [sort, setSort] = useState<sortType>("newest");
 
   const filterProps = { setFilters, filters, setSort, sort, search };
 
@@ -29,7 +29,7 @@ const Search = () => {
     <Container>
       <Navbar />
       <Announcement />
-      <Title>{search || 'Search'}</Title>
+      <Title>{search || "Search"}</Title>
 
       <Filters {...filterProps} />
 

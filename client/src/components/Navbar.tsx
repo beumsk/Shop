@@ -166,7 +166,7 @@ const NoSR = styled.span`
 `;
 
 const Navbar = () => {
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState<string>("");
   const notInitialRender = useRef(false);
   const countEl = useRef<any>(null);
   const dispatch = useDispatch();

@@ -20,8 +20,8 @@ const Title = styled.h1`
 const Products = () => {
   const location = useLocation();
   const cat = location.pathname.split("/")[2];
-  const [filters, setFilters] = useState({ color: "", size: "" });
-  const [sort, setSort] = useState("newest");
+  const [filters, setFilters] = useState<filtersType>({ color: "", size: "" });
+  const [sort, setSort] = useState<sortType>("newest");
 
   const filterProps = { setFilters, filters, setSort, sort, cat };
 

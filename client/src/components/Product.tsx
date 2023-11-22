@@ -61,7 +61,7 @@ const Icon = styled.div`
   }
 `;
 
-const Product = ({ item }) => {
+const Product = ({ item }: { item: productType }) => {
   const user = useSelector((state: any) => state.user?.currentUser);
   const dispatch = useDispatch();
 

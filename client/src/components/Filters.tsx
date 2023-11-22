@@ -51,11 +51,11 @@ const Filters = ({
   search,
 }: {
   setFilters: any;
-  filters: any;
+  filters: filtersType;
   setSort: any;
-  sort: any;
-  cat?: any;
-  search?: any;
+  sort: sortType;
+  cat?: string;
+  search?: string;
 }) => {
   useEffect(() => {
     handleReset();

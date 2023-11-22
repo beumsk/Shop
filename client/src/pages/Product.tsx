@@ -203,13 +203,13 @@ const Product = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const id = location.pathname.split("/")[2];
-  const [product, setProduct] = useState<any>({});
-  const [quantity, setQuantity] = useState(1);
-  const [color, setColor] = useState("");
-  const [size, setSize] = useState("");
-  const [help, setHelp] = useState("");
-  const [anim, setAnim] = useState(false);
-  const [CTA, setCTA] = useState(false);
+  const [product, setProduct] = useState<productType>();
+  const [quantity, setQuantity] = useState<number>(1);
+  const [color, setColor] = useState<string>("");
+  const [size, setSize] = useState<string>("");
+  const [help, setHelp] = useState<string>("");
+  const [anim, setAnim] = useState<boolean>(false);
+  const [CTA, setCTA] = useState<boolean>(false);
   const user = useSelector((state: any) => state.user?.currentUser);
   const dispatch = useDispatch();
 

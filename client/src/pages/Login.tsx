@@ -79,8 +79,8 @@ const Login = () => {
   const location = useLocation() as any;
   const navigate = useNavigate();
   const registerData = location.state?.form;
-  const [username, setUsername] = useState(registerData?.username || "");
-  const [password, setPassword] = useState(registerData?.password || "");
+  const [username, setUsername] = useState<string>(registerData?.username || "");
+  const [password, setPassword] = useState<string>(registerData?.password || "");
   const dispatch = useDispatch();
   const { isFetching, error } = useSelector((state: any) => state.user);
 

@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import styled from 'styled-components';
-import { FaCaretRight, FaCaretLeft } from 'react-icons/fa';
-import { sliderItems } from '../data';
-import { mq } from '../responsive';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import styled from "styled-components";
+import { FaCaretRight, FaCaretLeft } from "react-icons/fa";
+import { sliderItems } from "../data";
+import { mq } from "../responsive";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
@@ -27,8 +27,8 @@ const Arrow = styled.div`
   top: 0;
   bottom: 0;
   margin: auto;
-  left: ${(p) => (p.direction === 'left' ? '10px' : 'unset')};
-  right: ${(p) => (p.direction === 'right' ? '10px' : 'unset')};
+  left: ${(p) => (p.direction === "left" ? "10px" : "unset")};
+  right: ${(p) => (p.direction === "right" ? "10px" : "unset")};
   z-index: 2;
   opacity: 0.6;
   transition: all 0.2s;
@@ -51,7 +51,7 @@ const Slide = styled.div`
   width: 100vw;
   height: 100vh;
   background: ${(p) => p.bg};
-  ${mq({ display: 'flex', flexDirection: 'row' }, 600)}
+  ${mq({ display: "flex", flexDirection: "row" }, 600)}
 `;
 
 const ImageContainer = styled.div`
@@ -64,25 +64,25 @@ const ImageContainer = styled.div`
 const Image = styled.img`
   width: 60%;
   margin: auto;
-  ${mq({ width: '100%' }, 600)}
+  ${mq({ width: "100%" }, 600)}
 `;
 
 const InfoContainer = styled.div`
   flex: 1;
   padding: 20px;
-  ${mq({ padding: '50px' }, 600)}
+  ${mq({ padding: "50px" }, 600)}
 `;
 
 const Title = styled.h1`
   font-size: 40px;
-  ${mq({ fontSize: '70px' }, 900)}
+  ${mq({ fontSize: "70px" }, 900)}
 `;
 
 const Desc = styled.p`
   margin: 20px 0;
   font-size: 20px;
   letter-spacing: 3px;
-  ${mq({ margin: '50px 0' }, 600)}
+  ${mq({ margin: "50px 0" }, 600)}
 `;
 
 const Button = styled(Link)`
@@ -99,9 +99,9 @@ const Button = styled(Link)`
 `;
 
 const Slider = () => {
-  const [slideIndex, setSlideIndex] = useState(0);
+  const [slideIndex, setSlideIndex] = useState<number>(0);
   const handleClick = (direction) => {
-    if (direction === 'left') {
+    if (direction === "left") {
       setSlideIndex(slideIndex > 0 ? slideIndex - 1 : sliderItems.length - 1);
     } else {
       setSlideIndex(slideIndex < sliderItems.length - 1 ? slideIndex + 1 : 0);
@@ -110,7 +110,7 @@ const Slider = () => {
 
   return (
     <Container>
-      <Arrow direction="left" onClick={() => handleClick('left')}>
+      <Arrow direction="left" onClick={() => handleClick("left")}>
         <FaCaretLeft />
       </Arrow>
       <Wrapper slideIndex={slideIndex}>
@@ -127,7 +127,7 @@ const Slider = () => {
           </Slide>
         ))}
       </Wrapper>
-      <Arrow direction="right" onClick={() => handleClick('right')}>
+      <Arrow direction="right" onClick={() => handleClick("right")}>
         <FaCaretRight />
       </Arrow>
     </Container>
